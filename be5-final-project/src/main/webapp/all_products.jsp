@@ -101,7 +101,7 @@ pageContext.setAttribute("allProducts", productDAO.getAllProducts());
 				<c:forEach items="${allProducts}" var="product">
 					<div class="col-sm-6 col-md-4 col-lg-3">
 						<div class="box">
-							<a href="">
+							<a href="product_details.jsp?productId=${product.id}">
 								<div class="img-box">
 									<img src="images/${product.imgName}" alt="">
 								</div>
