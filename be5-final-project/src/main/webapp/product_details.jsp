@@ -1,3 +1,5 @@
+<%@page import="dao.CategoryDAO"%>
+<%@page import="entity.Category"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.ProductDAO"%>
 <%@page import="entity.Product"%>
@@ -9,10 +11,21 @@
 <%
 String productIdString = request.getParameter("productId");
 int productId = Integer.parseInt(productIdString);
-
 ProductDAO productDAO = new ProductDAO();
-pageContext.setAttribute("productId", productId);
 pageContext.setAttribute("product", productDAO.getProductById(productId));
+
+String categoryIdString = request.getParameter("categoryId");
+
+CategoryDAO categoryDAO = new CategoryDAO();
+
+if (categoryIdString != null) {
+	int categoryId = Integer.parseInt(categoryIdString);
+	pageContext.setAttribute("productsByCategory", productDAO.getProductsByCategoryId(categoryId));
+} else {
+	pageContext.setAttribute("latestProducts", productDAO.getLatestProducts());
+}
+
+pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 %>
 <!DOCTYPE html>
 <html>
@@ -65,17 +78,13 @@ pageContext.setAttribute("product", productDAO.getProductById(productId));
 						<li class="nav-item active"><a class="nav-link"
 							href="index.jsp">Home <span class="sr-only">(current)</span></a>
 						</li>
-						<li class="nav-item"><a class="nav-link" href="shop.html">
-								Shop </a></li>
-						<li class="nav-item"><a class="nav-link" href="why.html">
-								Why Us </a></li>
-						<li class="nav-item"><a class="nav-link"
-							href="testimonial.html"> Testimonial </a></li>
-						<li class="nav-item"><a class="nav-link" href="contact.html">Contact
-								Us</a></li>
-					</ul>
-					<div class="user_option">
-						<a href=""> <i class="fa fa-user" aria-hidden="true"></i> <span>
+						<c:forEach items="${categories}" var="category">
+							<li class="nav-item"><a class="nav-link"
+								href="products_by_cat.jsp?categoryId=${category.id}">
+									${category.name} </a></li>
+						</c:forEach>
+						<div class="user_option">
+							<a href=""> <i class="fa fa-user" aria-hidden="true"></i> <span>
 								Login </span>
 						</a> <a href=""> <i class="fa fa-shopping-bag" aria-hidden="true"></i>
 						</a>
@@ -123,7 +132,8 @@ pageContext.setAttribute("product", productDAO.getProductById(productId));
 
 				<div class="col-sm-6 col-md-4 col-lg-9">
 					<div class="box">
-						Quantity : ${product.quantity} <br> Description : ${product.description}
+						Quantity : ${product.quantity} <br> Description :
+						${product.description}
 					</div>
 				</div>
 			</div>

@@ -1,3 +1,5 @@
+<%@page import="dao.CategoryDAO"%>
+<%@page import="entity.Category"%>
 <%@page import="java.util.List"%>
 <%@page import="dao.ProductDAO"%>
 <%@page import="entity.Product"%>
@@ -8,7 +10,11 @@
 
 <%
 ProductDAO productDAO = new ProductDAO();
+CategoryDAO categoryDAO = new CategoryDAO();
+
 pageContext.setAttribute("allProducts", productDAO.getAllProducts());
+pageContext.setAttribute("categories", categoryDAO.getAllCategories());
+%>
 %>
 
 <!DOCTYPE html>
@@ -62,26 +68,23 @@ pageContext.setAttribute("allProducts", productDAO.getAllProducts());
 						<li class="nav-item active"><a class="nav-link"
 							href="index.jsp">Home <span class="sr-only">(current)</span></a>
 						</li>
-						<li class="nav-item"><a class="nav-link" href="shop.html">
-								Shop </a></li>
-						<li class="nav-item"><a class="nav-link" href="why.html">
-								Why Us </a></li>
-						<li class="nav-item"><a class="nav-link"
-							href="testimonial.html"> Testimonial </a></li>
-						<li class="nav-item"><a class="nav-link" href="contact.html">Contact
-								Us</a></li>
+						<c:forEach items="${categories}" var="category">
+							<li class="nav-item"><a class="nav-link"
+								href="products_by_cat.jsp?categoryId=${category.id}">
+									${category.name} </a></li>
+						</c:forEach>
+						<div class="user_option">
+							<a href=""> <i class="fa fa-user" aria-hidden="true"></i> <span>
+									Login </span>
+							</a> <a href=""> <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+							</a>
+							<form class="form-inline ">
+								<button class="btn nav_search-btn" type="submit">
+									<i class="fa fa-search" aria-hidden="true"></i>
+								</button>
+							</form>
+						</div>
 					</ul>
-					<div class="user_option">
-						<a href=""> <i class="fa fa-user" aria-hidden="true"></i> <span>
-								Login </span>
-						</a> <a href=""> <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-						</a>
-						<form class="form-inline ">
-							<button class="btn nav_search-btn" type="submit">
-								<i class="fa fa-search" aria-hidden="true"></i>
-							</button>
-						</form>
-					</div>
 				</div>
 			</nav>
 		</header>
