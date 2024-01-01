@@ -9,16 +9,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
-String categoryIdString = request.getParameter("categoryId");
 ProductDAO productDAO = new ProductDAO();
 CategoryDAO categoryDAO = new CategoryDAO();
 
-if (categoryIdString != null) {
-	int categoryId = Integer.parseInt(categoryIdString);
-	pageContext.setAttribute("productsByCategory", productDAO.getProductsByCategoryId(categoryId));
-} else {
-	pageContext.setAttribute("latestProducts", productDAO.getLatestProducts());
-}
+pageContext.setAttribute("latestProducts", productDAO.getLatestProducts());
 
 pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 %>
@@ -58,7 +52,7 @@ pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 
 <body>
 	<div class="hero_area">
-		<!-- header section strats -->
+		<!-- header section starts -->
 		<header class="header_section">
 			<nav class="navbar navbar-expand-lg custom_nav-container ">
 				<a class="navbar-brand" href="index.html"> <span> Giftos
@@ -86,15 +80,19 @@ pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 									Login </span>
 							</a> <a href=""> <i class="fa fa-shopping-bag" aria-hidden="true"></i>
 							</a>
-							<form action="#">
+
+							<!-- search bar -->
+							<form action="search.jsp" method="GET">
 								<div class="col-md-6 col-lg-5 px-0 d-flex align-items-center">
-									<input type="text" class="form-control mr-2"
+									<input type="text" name="string" class="form-control mr-2"
 										placeholder="Search">
 									<button class="btn nav_search-btn" type="submit">
 										<i class="fa fa-search" aria-hidden="true"></i>
 									</button>
 								</div>
 							</form>
+							<!-- end search bar -->
+
 						</div>
 					</ul>
 				</div>

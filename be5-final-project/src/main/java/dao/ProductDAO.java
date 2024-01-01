@@ -107,4 +107,28 @@ public class ProductDAO {
 
 	}
 
+	public static List<Product> getProductsBySearch(String string) throws SQLException {
+		Connection connection = DBConnection.makeConnection();
+		Statement stmt = connection.createStatement();
+		String sqlQuery = "SELECT * FROM product WHERE name LIKE ?";
+		PreparedStatement preStmt = connection.prepareStatement(sqlQuery);
+		preStmt.setString(1, "%" + string + "%");
+		ResultSet resultSet = preStmt.executeQuery();
+
+		List<Product> list = new ArrayList<Product>();
+
+		while (resultSet.next()) {
+			int id = resultSet.getInt("id");
+			String name = resultSet.getString("name");
+			int price = resultSet.getInt("price");
+			String imgName = resultSet.getString("img_name");
+			boolean isNew = resultSet.getBoolean("is_new");
+
+			Product product = new Product(id, name, price, imgName, isNew);
+			list.add(product);
+
+		}
+		return list;
+
+	}
 }

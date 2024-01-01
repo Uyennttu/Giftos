@@ -12,19 +12,21 @@
 ProductDAO productDAO = new ProductDAO();
 CategoryDAO categoryDAO = new CategoryDAO();
 
-String categoryIdString = request.getParameter("categoryId");
+String searchString = request.getParameter("string");
 
-if (categoryIdString != null) {
-	int categoryId = Integer.parseInt(categoryIdString);
-	pageContext.setAttribute("productsByCategory", productDAO.getProductsByCategoryId(categoryId));
+if (searchString != null) {
+	List<Product> products = productDAO.getProductsBySearch(searchString);
+	if (products.isEmpty()) {
+		pageContext.setAttribute("noProductsFound", true);
+	} else {
+		pageContext.setAttribute("productsBySearch", products);
+	}
 } else {
 	pageContext.setAttribute("latestProducts", productDAO.getLatestProducts());
 }
 
 pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 %>
-
-
 
 <!DOCTYPE html>
 <html>
@@ -104,15 +106,16 @@ pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 		</header>
 		<!-- end header section -->
 
-		<!-- Display products for selected category -->
+		<!-- Display products for search bar -->
 		<section class="shop_section layout_padding">
 			<div class="container">
-				<div class="heading_container heading_center">
-					<h2>Products</h2>
-				</div>
-				<div class="row">
-					<c:if test="${not empty productsByCategory}">
-						<c:forEach items="${productsByCategory}" var="product">
+				<c:if test="${not empty productsBySearch}">
+					<div class="heading_container heading_center">
+						<h2>Products Found</h2>
+					</div>
+					<div class="row">
+
+						<c:forEach items="${productsBySearch}" var="product">
 							<div class="col-sm-6 col-md-4 col-lg-3">
 								<div class="box">
 									<a href="product_details.jsp?productId=${product.id}">
@@ -133,14 +136,20 @@ pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 								</div>
 							</div>
 						</c:forEach>
-					</c:if>
+				</c:if>
+
+			</div>
+			<c:if test="${noProductsFound}">
+				<div class="heading_container heading_center">
+					<h2>No Products Found</h2>
 				</div>
-				<div class="btn-box">
-					<a href="all_products.jsp"> View All Products </a>
-				</div>
+			</c:if>
+			<div class="btn-box">
+				<a href="all_products.jsp"> View All Products </a>
 			</div>
 	</div>
-	<!-- End Display products for selected category -->
+	</div>
+	<!-- End Display products for search bar -->
 
 
 	<!-- why section -->
