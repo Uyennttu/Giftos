@@ -85,15 +85,19 @@ pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 						</c:forEach>
 						<div class="user_option">
 							<a href=""> <i class="fa fa-user" aria-hidden="true"></i> <span>
-								Login </span>
-						</a> <a href=""> <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-						</a>
-						<form class="form-inline ">
-							<button class="btn nav_search-btn" type="submit">
-								<i class="fa fa-search" aria-hidden="true"></i>
-							</button>
-						</form>
-					</div>
+									Login </span>
+							</a> <a href=""> <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+							</a>
+							<form action="#">
+								<div class="col-md-6 col-lg-5 px-0 d-flex align-items-center">
+									<input type="text" class="form-control mr-2"
+										placeholder="Search">
+									<button class="btn nav_search-btn" type="submit">
+										<i class="fa fa-search" aria-hidden="true"></i>
+									</button>
+								</div>
+							</form>
+						</div>
 				</div>
 			</nav>
 		</header>
