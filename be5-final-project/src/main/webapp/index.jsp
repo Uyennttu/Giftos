@@ -12,12 +12,28 @@
 ProductDAO productDAO = new ProductDAO();
 CategoryDAO categoryDAO = new CategoryDAO();
 
-pageContext.setAttribute("latestProducts", productDAO.getLatestProducts());
+// load products by payloads
+List<Product> products;
+String categoryIdString = request.getParameter("categoryId");
+String action = request.getParameter("action");
+String searchValue = request.getParameter("searchValue");
 
+if ("SHOW_ALL".equals(action)) {
+	products = productDAO.getAllProducts();
+
+} else if (categoryIdString != null) {
+	int categoryId = Integer.parseInt(categoryIdString);
+	products = productDAO.getProductsByCategoryId(categoryId);
+
+} else if (searchValue != null) {
+	products = productDAO.getProductsBySearch(searchValue);
+
+} else {
+	products = productDAO.getLatestProducts();
+}
+pageContext.setAttribute("products", products);
 pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 %>
-
-
 
 <!DOCTYPE html>
 <html>
@@ -72,8 +88,8 @@ pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 						</li>
 						<c:forEach items="${categories}" var="category">
 							<li class="nav-item"><a class="nav-link"
-								href="products_by_cat.jsp?categoryId=${category.id}">
-									${category.name} </a></li>
+								href="index.jsp?categoryId=${category.id}"> ${category.name}
+							</a></li>
 						</c:forEach>
 						<div class="user_option">
 							<a href=""> <i class="fa fa-user" aria-hidden="true"></i> <span>
@@ -82,13 +98,18 @@ pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 							</a>
 
 							<!-- search bar -->
-							<form action="search.jsp" method="GET">
+							<form action="index.jsp" >
 								<div class="col-md-6 col-lg-5 px-0 d-flex align-items-center">
-									<input type="text" name="string" class="form-control mr-2"
+									<input type="text" name="searchValue" class="form-control mr-2"
 										placeholder="Search">
-									<button class="btn nav_search-btn" type="submit">
+									<!-- <button class="btn nav_search-btn" type="submit">
 										<i class="fa fa-search" aria-hidden="true"></i>
-									</button>
+									</button> -->
+
+
+									<div class="d-flex">
+										<input type="submit" value="SEARCH">
+									</div>
 								</div>
 							</form>
 							<!-- end search bar -->
@@ -108,13 +129,11 @@ pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 		<section class="shop_section layout_padding">
 			<div class="container">
 				<div class="heading_container heading_center">
-					<h2>Latest Products</h2>
+					<h2>Products</h2>
 				</div>
 				<div class="row">
-					<c:forEach items="${latestProducts}" var="product">
+					<c:forEach items="${products}" var="product">
 						<div class="col-sm-6 col-md-4 col-lg-3">
-
-
 							<div class="box">
 								<a href="product_details.jsp?productId=${product.id}">
 									<div class="img-box">
@@ -125,10 +144,12 @@ pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 										<h6>
 											Price <span> $${product.price} </span>
 										</h6>
-									</div>
-									<div class="new">
-										<span> New </span>
-									</div>
+									</div> <c:if test="${product.isNew}">
+										<div class="new">
+											<span> New </span>
+
+										</div>
+									</c:if>
 								</a>
 							</div>
 
@@ -136,7 +157,7 @@ pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 					</c:forEach>
 				</div>
 				<div class="btn-box">
-					<a href="all_products.jsp"> View All Products </a>
+					<a href="index.jsp?action=SHOW_ALL"> View All Products </a>
 				</div>
 			</div>
 		</section>

@@ -38,7 +38,6 @@ public class ProductDAO {
 
 	public static Product getProductById(int productId) throws SQLException {
 		Connection connection = DBConnection.makeConnection();
-		Statement stmt = connection.createStatement();
 		String sqlQuery = "SELECT * FROM product WHERE id = ?";
 		PreparedStatement preStmt = connection.prepareStatement(sqlQuery);
 		preStmt.setInt(1, productId);
@@ -84,8 +83,7 @@ public class ProductDAO {
 
 	public static List<Product> getProductsByCategoryId(int categoryId) throws SQLException {
 		Connection connection = DBConnection.makeConnection();
-		Statement stmt = connection.createStatement();
-		String sqlQuery = "SELECT p.id, p.name, p.price, p.img_name, p.is_new FROM category c JOIN product p ON c.id = p.category_id WHERE c.id = ?";
+		String sqlQuery = "SELECT * FROM product WHERE category_id = ?";
 		PreparedStatement preStmt = connection.prepareStatement(sqlQuery);
 		preStmt.setInt(1, categoryId);
 		ResultSet resultSet = preStmt.executeQuery();
@@ -107,12 +105,11 @@ public class ProductDAO {
 
 	}
 
-	public static List<Product> getProductsBySearch(String string) throws SQLException {
+	public static List<Product> getProductsBySearch(String searchValue) throws SQLException {
 		Connection connection = DBConnection.makeConnection();
-		Statement stmt = connection.createStatement();
 		String sqlQuery = "SELECT * FROM product WHERE name LIKE ?";
 		PreparedStatement preStmt = connection.prepareStatement(sqlQuery);
-		preStmt.setString(1, "%" + string + "%");
+		preStmt.setString(1, "%" + searchValue + "%");
 		ResultSet resultSet = preStmt.executeQuery();
 
 		List<Product> list = new ArrayList<Product>();

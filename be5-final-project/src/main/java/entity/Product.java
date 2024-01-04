@@ -5,7 +5,7 @@ public class Product {
 	private String name;
 	private int price;
 	private String imgName;
-	private boolean is_new;
+	private boolean isNew;
 	private int quantity;
 	private String description;
 
@@ -13,46 +13,24 @@ public class Product {
 		// TODO Auto-generated constructor stub
 	}
 
-	
-
-	public Product(int id, String name, int price, String imgName, boolean is_new) {
+	public Product(int id, String name, int price, String imgName, boolean isNew, int quantity, String description) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.imgName = imgName;
-		this.is_new = is_new;
+		this.isNew = isNew;
+		this.quantity = quantity;
+		this.description = description;
 	}
 
-
-
-	public Product(int id, String name, int price, String imgName, boolean is_new, int quantity, String description) {
+	public Product(int id, String name, int price, String imgName, boolean isNew) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.price = price;
 		this.imgName = imgName;
-		this.is_new = is_new;
-		this.quantity = quantity;
-		this.description = description;
-	}
-
-
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
+		this.isNew = isNew;
 	}
 
 	public int getId() {
@@ -61,14 +39,6 @@ public class Product {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public boolean isIs_new() {
-		return is_new;
-	}
-
-	public void setIs_new(boolean is_new) {
-		this.is_new = is_new;
 	}
 
 	public String getName() {
@@ -95,4 +65,33 @@ public class Product {
 		this.imgName = imgName;
 	}
 
+	public boolean isNew() {
+		return isNew;
+	}
+	public boolean getIsNew() {
+		return isNew;
+	}
+
+	public void setNew(boolean isNew) {
+		this.isNew = isNew;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 }
+
+	

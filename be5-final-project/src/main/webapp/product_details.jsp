@@ -51,7 +51,7 @@ pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 
 <body>
 	<div class="hero_area">
-		<!-- header section strats -->
+		<!-- header section starts -->
 		<header class="header_section">
 			<nav class="navbar navbar-expand-lg custom_nav-container ">
 				<a class="navbar-brand" href="index.html"> <span> Giftos
@@ -71,29 +71,39 @@ pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 						</li>
 						<c:forEach items="${categories}" var="category">
 							<li class="nav-item"><a class="nav-link"
-								href="products_by_cat.jsp?categoryId=${category.id}">
-									${category.name} </a></li>
+								href="index.jsp?categoryId=${category.id}"> ${category.name}
+							</a></li>
 						</c:forEach>
 						<div class="user_option">
 							<a href=""> <i class="fa fa-user" aria-hidden="true"></i> <span>
 									Login </span>
 							</a> <a href=""> <i class="fa fa-shopping-bag" aria-hidden="true"></i>
 							</a>
+
 							<!-- search bar -->
-							<form action="search.jsp" method="GET">
-								<div class="col-md-6 col-lg-5 px-0 d-flex align-items-center">
-									<input type="text" name="string" class="form-control mr-2"
-										placeholder="Search">
-									<button class="btn nav_search-btn" type="submit">
+							<form action="index.jsp">
+								<div class="col-md-6 col-lg-6 px-0 d-flex align-items-center">
+									<input type="text" name="searchValue" class="form-control mr-2"
+										placeholder="Search here...">
+									<!-- <button class="btn nav_search-btn" type="submit">
 										<i class="fa fa-search" aria-hidden="true"></i>
-									</button>
+									</button> -->
+
+
+									<div class="d-flex">
+										<input type="submit" value="Search">
+									</div>
 								</div>
 							</form>
 							<!-- end search bar -->
+
 						</div>
+					</ul>
 				</div>
 			</nav>
 		</header>
+
+
 		<!-- end header section -->
 
 	</div>
@@ -104,7 +114,7 @@ pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 	<section class="shop_section layout_padding">
 		<div class="container">
 			<div class="heading_container heading_center">
-				<h2>Product Description</h2>
+				<h2>Products</h2>
 			</div>
 			<div class="row">
 
@@ -119,29 +129,27 @@ pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 								<h6>
 									Price <span> $${product.price} </span>
 								</h6>
-							</div>
-							<div class="new">
-								<span> New </span>
-							</div>
+							</div> <c:if test="${product.isNew}">
+								<div class="new">
+									<span> New </span>
+
+								</div>
+							</c:if>
 						</a>
 					</div>
-				</div>
 
+				</div>
 				<div class="col-sm-6 col-md-4 col-lg-9">
 					<div class="box">
 						Quantity : ${product.quantity} <br> Description :
 						${product.description}
 					</div>
 				</div>
+
 			</div>
-		</div>
-
-		</div>
-
-		</div>
-		<div class="btn-box">
-			<a href="all_products.jsp"> View All Products </a>
-		</div>
+			<div class="btn-box">
+				<a href="index.jsp?action=SHOW_ALL"> View All Products </a>
+			</div>
 		</div>
 	</section>
 
