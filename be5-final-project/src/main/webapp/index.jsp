@@ -1,3 +1,4 @@
+<%@page import="dao.UserDAO"%>
 <%@page import="entity.Category"%>
 <%@page import="dao.CategoryDAO"%>
 <%@page import="java.util.List"%>
@@ -14,6 +15,7 @@ CategoryDAO categoryDAO = new CategoryDAO();
 
 // load products by payloads
 List<Product> products;
+
 String categoryIdString = request.getParameter("categoryId");
 String action = request.getParameter("action");
 String searchValue = request.getParameter("searchValue");
@@ -92,13 +94,14 @@ pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 							</a></li>
 						</c:forEach>
 						<div class="user_option">
-							<a href=""> <i class="fa fa-user" aria-hidden="true"></i> <span>
-									Login </span>
+
+							<a href="login.jsp"> <i class="fa fa-user" aria-hidden="true"></i>
+								<span> Login </span>
 							</a> <a href=""> <i class="fa fa-shopping-bag" aria-hidden="true"></i>
 							</a>
 
 							<!-- search bar -->
-							<form action="index.jsp" >
+							<form action="index.jsp">
 								<div class="col-md-6 col-lg-5 px-0 d-flex align-items-center">
 									<input type="text" name="searchValue" class="form-control mr-2"
 										placeholder="Search">

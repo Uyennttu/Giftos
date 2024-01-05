@@ -1,23 +1,27 @@
-<%@page import="dao.CategoryDAO"%>
-<%@page import="entity.Category"%>
-<%@page import="java.util.List"%>
-<%@page import="dao.ProductDAO"%>
-<%@page import="entity.Product"%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="dao.UserDAO"%>
+<%@page import="entity.User"%>
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <%
-ProductDAO productDAO = new ProductDAO();
-CategoryDAO categoryDAO = new CategoryDAO();
+UserDAO userDAO = new UserDAO();
 
-String productIdString = request.getParameter("productId");
-int productId = Integer.parseInt(productIdString);
+String userName = request.getParameter("userName");
+String password = request.getParameter("password");
 
-pageContext.setAttribute("product", productDAO.getProductById(productId));
-pageContext.setAttribute("categories", categoryDAO.getAllCategories());
+User user = userDAO.login(userName, password);
+pageContext.setAttribute("user", user);
+
+if (user != null) {
+	response.sendRedirect("index.jsp");
+} else {
+	request.setAttribute("errorMessage", "Username or password is incorrect. Please try again.");
+
+}
 %>
+
 <!DOCTYPE html>
 <html>
 
@@ -57,102 +61,42 @@ pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 				<a class="navbar-brand" href="index.html"> <span> Giftos
 				</span>
 				</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class=""></span>
-				</button>
-
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav  ">
-						<li class="nav-item active"><a class="nav-link"
-							href="index.jsp">Home <span class="sr-only">(current)</span></a>
-						</li>
-						<c:forEach items="${categories}" var="category">
-							<li class="nav-item"><a class="nav-link"
-								href="index.jsp?categoryId=${category.id}"> ${category.name}
-							</a></li>
-						</c:forEach>
-						<div class="user_option">
-							<a href=""> <i class="fa fa-user" aria-hidden="true"></i> <span>
-									Login </span>
-							</a> <a href=""> <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-							</a>
-
-							<!-- search bar -->
-							<form action="index.jsp">
-								<div class="col-md-6 col-lg-6 px-0 d-flex align-items-center">
-									<input type="text" name="searchValue" class="form-control mr-2"
-										placeholder="Search here...">
-									<!-- <button class="btn nav_search-btn" type="submit">
-										<i class="fa fa-search" aria-hidden="true"></i>
-									</button> -->
-
-									<div class="d-flex">
-										<input type="submit" value="Search">
-									</div>
-								</div>
-							</form>
-							<!-- end search bar -->
-
-						</div>
-					</ul>
-				</div>
 			</nav>
 		</header>
-
-
-		<!-- end header section -->
-
 	</div>
-	<!-- end hero area -->
 
-	<!-- shop section -->
 
-	<section class="shop_section layout_padding">
-		<div class="container">
-			<div class="heading_container heading_center">
-				<h2>Products</h2>
-			</div>
+	<!-- login session -->
+	<div class="container">
+		<div class="heading_container heading_center">
+			<h3>Log in and get exploring</h3>
+			<p>Log into your account or create one below.</p>
+		</div>
+		<br>
+	</div>
+	<div class="container container-bg">
+		<div class="heading_container heading_center">
 			<div class="row">
+				<div class="col-md-6 col-lg-5 px-0">
 
-				<div class="col-sm-6 col-md-4 col-lg-3">
-					<div class="box">
-						<a href="">
-							<div class="img-box">
-								<img src="images/${product.imgName}" alt="">
-							</div>
-							<div class="detail-box">
-								<h6>${product.name}</h6>
-								<h6>
-									Price <span> $${product.price} </span>
-								</h6>
-							</div> <c:if test="${product.isNew}">
-								<div class="new">
-									<span> New </span>
+				
+					<form action="index.jsp" method="post">
+						<label for="uname">Username:</label><br> <input type="text"
+							id="uname" name="uname" placeholder="Enter your username"><br>
+						<label for="pwd">Password:</label><br> <input type="text"
+							id="pwd" name="pwd" placeholder="Enter your password"><br>
+						<br> <input type="submit" value="Submit">
+					</form>
 
-								</div>
-							</c:if>
-						</a>
-					</div>
 
 				</div>
-				<div class="col-sm-6 col-md-4 col-lg-9">
-					<div class="box">
-						Quantity : ${product.quantity} <br> Description :
-						${product.description}
-					</div>
-				</div>
-
-			</div>
-			<div class="btn-box">
-				<a href="index.jsp?action=SHOW_ALL"> View All Products </a>
 			</div>
 		</div>
-	</section>
+	</div>
+	<br>
 
-	<!-- end shop section -->
+	<!-- end login session -->
+
 
 	<!-- info section -->
 
