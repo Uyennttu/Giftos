@@ -82,7 +82,7 @@ if (user != null) {
 				
 					<form action="index.jsp" method="post">
 						<label for="uname">Username:</label><br> <input type="text"
-							id="uname" name="uname" placeholder="Enter your username"><br>
+							id="uname" name="uname" placeholder="Enter your username"><br><br>
 						<label for="pwd">Password:</label><br> <input type="text"
 							id="pwd" name="pwd" placeholder="Enter your password"><br>
 						<br> <input type="submit" value="Submit">

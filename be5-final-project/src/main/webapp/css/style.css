@@ -324,14 +324,14 @@ a:hover, a:focus {
 }
 
 .shop_section .heading_container {
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 }
 
 .shop_section .box {
 	background-color: #eeeeee;
 	position: relative;
 	padding: 10px;
-	margin-top: 25px;
+	margin-top: 10px;
 }
 
 .shop_section .box a {

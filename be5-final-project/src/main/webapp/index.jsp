@@ -14,7 +14,7 @@ ProductDAO productDAO = new ProductDAO();
 CategoryDAO categoryDAO = new CategoryDAO();
 
 // load products by payloads
-List<Product> products;
+List<Product> products = new ArrayList<>();;
 
 String categoryIdString = request.getParameter("categoryId");
 String action = request.getParameter("action");
@@ -32,6 +32,9 @@ if ("SHOW_ALL".equals(action)) {
 
 } else {
 	products = productDAO.getLatestProducts();
+}
+if (products.isEmpty()) {
+	pageContext.setAttribute("noProductsFound", true);
 }
 pageContext.setAttribute("products", products);
 pageContext.setAttribute("categories", categoryDAO.getAllCategories());
@@ -159,6 +162,12 @@ pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 						</div>
 					</c:forEach>
 				</div>
+				<c:if test="${noProductsFound}">
+					<div class="heading_container heading_center">
+						<p>Products are out of stock.</p>
+					</div>
+				</c:if>
+
 				<div class="btn-box">
 					<a href="index.jsp?action=SHOW_ALL"> View All Products </a>
 				</div>
