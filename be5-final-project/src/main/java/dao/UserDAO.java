@@ -16,17 +16,17 @@ public class UserDAO {
 		preStmt.setString(1, userName);
 		preStmt.setString(2, password);
 		ResultSet resultSet = preStmt.executeQuery();
-		
-		if(resultSet.next()) {
-			int id = resultSet.getInt("id");
-			String name = resultSet.getString("user_name");
-			String pwd= resultSet.getString("password");
-			String mail = resultSet.getString("email");
-			
-			return new User(id, name, pwd, mail);
+
+		User user = null;
+
+		if (resultSet.next()) {
+			user = new User();
+			user.setUserName(userName);
+			user.setPassword(password);
+
 		}
-		return null;
-		
+		return user;
+
 	}
 
 }

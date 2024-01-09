@@ -11,16 +11,16 @@ UserDAO userDAO = new UserDAO();
 String userName = request.getParameter("userName");
 String password = request.getParameter("password");
 
-User user = userDAO.login(userName, password);
-pageContext.setAttribute("user", user);
+User currentUser = userDAO.login(userName, password);
 
-if (user != null) {
+if (currentUser != null) {
 	response.sendRedirect("index.jsp");
 } else {
-	request.setAttribute("errorMessage", "Username or password is incorrect. Please try again.");
-
+	request.setAttribute("message", "Invalid username/password");
 }
 %>
+
+
 
 <!DOCTYPE html>
 <html>
@@ -72,6 +72,9 @@ if (user != null) {
 			<h3>Log in and get exploring</h3>
 			<p>Log into your account or create one below.</p>
 		</div>
+		<c:if test="${not empty errorMessage}">
+			<p>${message}</p>
+		</c:if>
 		<br>
 	</div>
 	<div class="container container-bg">
@@ -79,12 +82,12 @@ if (user != null) {
 			<div class="row">
 				<div class="col-md-6 col-lg-5 px-0">
 
-				
+
 					<form action="index.jsp" method="post">
 						<label for="uname">Username:</label><br> <input type="text"
-							id="uname" name="uname" placeholder="Enter your username"><br><br>
-						<label for="pwd">Password:</label><br> <input type="text"
-							id="pwd" name="pwd" placeholder="Enter your password"><br>
+							id="uname" name="uname" placeholder="Enter your username"><br>
+						<br> <label for="pwd">Password:</label><br> <input
+							type="text" id="pwd" name="pwd" placeholder="Enter your password"><br>
 						<br> <input type="submit" value="Submit">
 					</form>
 

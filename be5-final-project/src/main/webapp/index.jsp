@@ -14,7 +14,7 @@ ProductDAO productDAO = new ProductDAO();
 CategoryDAO categoryDAO = new CategoryDAO();
 
 // load products by payloads
-List<Product> products = new ArrayList<>();;
+List<Product> products = new ArrayList<>();
 
 String categoryIdString = request.getParameter("categoryId");
 String action = request.getParameter("action");
@@ -72,6 +72,9 @@ pageContext.setAttribute("categories", categoryDAO.getAllCategories());
 </head>
 
 <body>
+<div style="text-align: center">
+<h1> Welcome ${user.userName}</h1>
+</div>
 	<div class="hero_area">
 		<!-- header section starts -->
 		<header class="header_section">

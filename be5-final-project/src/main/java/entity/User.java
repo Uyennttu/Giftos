@@ -18,6 +18,13 @@ public class User {
 		this.email = email;
 
 	}
+	
+
+	public User(String userName, String password) {
+		super();
+		this.userName = userName;
+		this.password = password;
+	}
 
 	public int getId() {
 		return id;
