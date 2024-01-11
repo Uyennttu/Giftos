@@ -8,10 +8,10 @@
 <%
 UserDAO userDAO = new UserDAO();
 
-String userName = request.getParameter("userName");
+String username = request.getParameter("username");
 String password = request.getParameter("password");
 
-User currentUser = userDAO.login(userName, password);
+User currentUser = userDAO.getUserByNameAndPassword(username, password);
 
 if (currentUser != null) {
 	response.sendRedirect("index.jsp");
@@ -83,7 +83,7 @@ if (currentUser != null) {
 				<div class="col-md-6 col-lg-5 px-0">
 
 
-					<form action="index.jsp" method="post">
+					<form action="dispatcher.jsp">
 						<label for="uname">Username:</label><br> <input type="text"
 							id="uname" name="uname" placeholder="Enter your username"><br>
 						<br> <label for="pwd">Password:</label><br> <input

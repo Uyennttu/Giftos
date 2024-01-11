@@ -2,7 +2,7 @@ package entity;
 
 public class User {
 	private int id;
-	private String userName;
+	private String username;
 	private String password;
 	private String email;
 
@@ -10,20 +10,12 @@ public class User {
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(int id, String userName, String password, String email) {
+	public User(int id, String username, String password) {
 		super();
 		this.id = id;
-		this.userName = userName;
+		this.username = username;
 		this.password = password;
-		this.email = email;
 
-	}
-	
-
-	public User(String userName, String password) {
-		super();
-		this.userName = userName;
-		this.password = password;
 	}
 
 	public int getId() {
@@ -34,12 +26,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUserName() {
-		return userName;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getPassword() {
