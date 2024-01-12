@@ -60,10 +60,17 @@
 						<div class="user_option">
 
 							<a href="login.jsp"> <i class="fa fa-user" aria-hidden="true"></i>
-								<span> Login </span>
+								<c:choose>
+									<c:when test="${user == null}">
+										<span>Login</span>
+									</c:when>
+									<c:otherwise>
+										<span>${user.username}</span>
+									</c:otherwise>
+								</c:choose>
+
 							</a> <a href=""> <i class="fa fa-shopping-bag" aria-hidden="true"></i>
 							</a>
-
 							<!-- search bar -->
 							<form action="Home">
 								<div class="col-md-6 col-lg-5 px-0 d-flex align-items-center">

@@ -14,8 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.CategoryDAO;
 import dao.ProductDAO;
+import dao.UserDAO;
 import entity.Category;
 import entity.Product;
+import entity.User;
 
 /**
  * Servlet implementation class HomeController
@@ -38,6 +40,9 @@ public class HomeController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		
+
 		try {
 			ProductDAO productDAO = new ProductDAO();
 			List<Product> products;
@@ -50,25 +55,26 @@ public class HomeController extends HttpServlet {
 			String searchValue = request.getParameter("searchValue");
 			String productIdString = request.getParameter("productId");
 
-			
 			if (productIdString == null) {
 				if ("SHOW_ALL".equals(action)) {
 					products = productDAO.getAllProducts();
+
 				} else if (categoryIdString != null) {
 					int categoryId = Integer.parseInt(categoryIdString);
 					products = productDAO.getProductsByCategoryId(categoryId);
+
 				} else if (searchValue != null) {
 					products = productDAO.getProductsBySearch(searchValue);
+
 				} else {
 					products = productDAO.getLatestProducts();
 				}
-				
+
 				request.setAttribute("products", products);
 				request.setAttribute("categories", categories);
 				RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
 				rd.forward(request, response);
 
-				
 			} else {
 				int productId = Integer.parseInt(productIdString);
 				Product product = productDAO.getProductById(productId);
@@ -76,12 +82,13 @@ public class HomeController extends HttpServlet {
 				request.setAttribute("product", product);
 				RequestDispatcher rd = request.getRequestDispatcher("/product_details.jsp");
 				rd.forward(request, response);
-			}			
+			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 
 		}
+		
 
 	}
 

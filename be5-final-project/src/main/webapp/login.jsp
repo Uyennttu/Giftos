@@ -1,26 +1,6 @@
-<%@page import="dao.UserDAO"%>
-<%@page import="entity.User"%>
-
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-<%
-UserDAO userDAO = new UserDAO();
-
-String username = request.getParameter("username");
-String password = request.getParameter("password");
-
-User currentUser = userDAO.getUserByNameAndPassword(username, password);
-
-if (currentUser != null) {
-	response.sendRedirect("index.jsp");
-} else {
-	request.setAttribute("message", "Invalid username/password");
-}
-%>
-
-
 
 <!DOCTYPE html>
 <html>
@@ -72,9 +52,7 @@ if (currentUser != null) {
 			<h3>Log in and get exploring</h3>
 			<p>Log into your account or create one below.</p>
 		</div>
-		<c:if test="${not empty errorMessage}">
-			<p>${message}</p>
-		</c:if>
+		
 		<br>
 	</div>
 	<div class="container container-bg">
@@ -83,11 +61,11 @@ if (currentUser != null) {
 				<div class="col-md-6 col-lg-5 px-0">
 
 
-					<form action="dispatcher.jsp">
+					<form action="authentication">
 						<label for="uname">Username:</label><br> <input type="text"
-							id="uname" name="uname" placeholder="Enter your username"><br>
+							id="uname" name="username" placeholder="Enter your username"><br>
 						<br> <label for="pwd">Password:</label><br> <input
-							type="text" id="pwd" name="pwd" placeholder="Enter your password"><br>
+							type="text" id="pwd" name="password" placeholder="Enter your password"><br>
 						<br> <input type="submit" value="Submit">
 					</form>
 
