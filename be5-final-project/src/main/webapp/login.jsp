@@ -51,8 +51,12 @@
 		<div class="heading_container heading_center">
 			<h3>Log in and get exploring</h3>
 			<p>Log into your account or create one below.</p>
+
+
+			<c:if test="${not empty errorMessage}">
+				<p style="color: red;">${errorMessage}</p>
+			</c:if>
 		</div>
-		
 		<br>
 	</div>
 	<div class="container container-bg">
@@ -61,12 +65,13 @@
 				<div class="col-md-6 col-lg-5 px-0">
 
 
-					<form action="authentication">
+					<form action="Authentication">
 						<label for="uname">Username:</label><br> <input type="text"
 							id="uname" name="username" placeholder="Enter your username"><br>
 						<br> <label for="pwd">Password:</label><br> <input
-							type="text" id="pwd" name="password" placeholder="Enter your password"><br>
-						<br> <input type="submit" value="Submit">
+							type="text" id="pwd" name="password"
+							placeholder="Enter your password"><br> <br> <input
+							type="submit" value="Submit">
 					</form>
 
 

@@ -1,8 +1,7 @@
-package Controller;
+package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -14,10 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import dao.CategoryDAO;
 import dao.ProductDAO;
-import dao.UserDAO;
 import entity.Category;
 import entity.Product;
-import entity.User;
 
 /**
  * Servlet implementation class HomeController
@@ -40,9 +37,6 @@ public class HomeController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		
-
 		try {
 			ProductDAO productDAO = new ProductDAO();
 			List<Product> products;
@@ -88,7 +82,6 @@ public class HomeController extends HttpServlet {
 			e.printStackTrace();
 
 		}
-		
 
 	}
 
