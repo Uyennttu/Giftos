@@ -81,11 +81,11 @@ public class ProductDAO {
 
 	}
 
-	public static List<Product> getProductsByCategoryId(int categoryId) throws SQLException {
+	public static List<Product> getProductsByCategoryId(String categoryId) throws SQLException {
 		Connection connection = DBConnection.makeConnection();
 		String sqlQuery = "SELECT * FROM product WHERE category_id = ?";
 		PreparedStatement preStmt = connection.prepareStatement(sqlQuery);
-		preStmt.setInt(1, categoryId);
+		preStmt.setInt(1, Integer.parseInt(categoryId));
 		ResultSet resultSet = preStmt.executeQuery();
 
 		List<Product> list = new ArrayList<Product>();

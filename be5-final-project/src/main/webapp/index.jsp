@@ -55,40 +55,48 @@
 						</a></li>
 						<c:forEach items="${categories}" var="category">
 							<li class="nav-item"><a class="nav-link"
-								href="Home?categoryId=${category.id}"> ${category.name} </a></li>
+								href="Home?action=SHOW_PRODUCTS_BY_CATEGORY&categoryId=${category.id}">
+									${category.name} </a></li>
 						</c:forEach>
-						<div class="user_option">
 
-							<a href="login.jsp"> <i class="fa fa-user" aria-hidden="true"></i>
-								<c:choose>
-									<c:when test="${user == null}">
-										<span>Login</span>
-									</c:when>
-									<c:otherwise>
-										<span>${user.username}</span>
-									</c:otherwise>
-								</c:choose>
 
-							</a> <a href=""> <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-							</a>
-							<!-- search bar -->
-							<form action="Home">
-								<div class="col-md-6 col-lg-5 px-0 d-flex align-items-center">
-									<input type="text" name="searchValue" class="form-control mr-2"
-										placeholder="Search">
-									<!-- <button class="btn nav_search-btn" type="submit">
+
+						<!-- search bar -->
+						<form action="Home">
+							<div class="col-md-6 col-lg-11 px-0 d-flex align-items-center">
+								<input type="text" name="action" hidden value="SEARCH">
+								<input type="text" name="searchValue" class="form-control mr-2"
+									placeholder="Search">
+								<!-- <button class="btn nav_search-btn" type="submit">
 										<i class="fa fa-search" aria-hidden="true"></i>
 									</button> -->
 
 
-									<div class="d-flex">
-										<input type="submit" value="SEARCH">
-									</div>
+								<div class="d-flex">
+									<input type="submit" value="SEARCH">
 								</div>
-							</form>
-							<!-- end search bar -->
+							</div>
+						</form>
+						<!-- end search bar -->
+						<!-- login -->
+						<div class="user_option">
+							<c:if test="${empty sessionScope.user}">
 
+								<a href="login.jsp"> <i class="fa fa-user"
+									aria-hidden="true"></i> <span>Login</span> <a href="#"> <span>Register</span>
+							</c:if>
+							<c:if test="${not empty sessionScope.user}">
+
+								<a href="#"> <i class="fa fa-user" aria-hidden="true"></i> <span>${user.username}</span>
+
+									<a href="Authentication?action=LOG_OUT"> <span>Logout</span>
+							</c:if>
+							</a>
+							<!-- end login -->
+							<a href=""> <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+							</a>
 						</div>
+
 					</ul>
 				</div>
 			</nav>
@@ -131,15 +139,15 @@
 					</c:forEach>
 				</div>
 			</div>
-			<c:if test="${noProductsFound}">
+			<c:if test="${not empty searchResultMessage}">
 				<div class="heading_container heading_center">
-					<p>Products are out of stock.</p>
+					<p style="color: red;">${searchResultMessage}</p>
 				</div>
 			</c:if>
 
 
 			<div class="btn-box">
-				<a href="Home?action=SHOW_ALL"> View All Products </a>
+				<a href="Home?action=SHOW_ALL_PRODUCTS"> View All Products </a>
 			</div>
 	</div>
 	</section>
