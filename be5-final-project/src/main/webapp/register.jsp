@@ -49,8 +49,7 @@
 	<!-- login session -->
 	<div class="container">
 		<div class="heading_container heading_center">
-			<h3>Log in and get exploring</h3>
-
+			<h3>Create a new account</h3>
 			<c:if test="${not empty errorMessage}">
 				<p style="color: red;">${errorMessage}</p>
 			</c:if>
@@ -60,19 +59,22 @@
 	<div class="container container-bg">
 		<div class="heading_container heading_center">
 			<div class="row">
-				<div class="col-md-6 col-lg-5 px-0">
+				<div class="col-md-5 col-lg-2 px-0">
 
-
+					<!-- Form -->
 					<form action="Authentication">
-					<input type="text" name="action" hidden value="LOG_IN">
-						<label for="uname">Username:</label><br> <input type="text"
-							id="uname" name="username" placeholder="Enter your username"><br>
+					<input type="text" name="action" hidden value="REGISTER">
+						<label for="email">Email:</label><br> <input type="text"
+							id="email" name="email" placeholder="Enter your email"><br>
+						<br> <label for="uname">Username:</label><br> <input
+							type="text" id="uname" name="username"
+							placeholder="Enter your username"><br>
 						<br> <label for="pwd">Password:</label><br> <input
 							type="text" id="pwd" name="password"
 							placeholder="Enter your password"><br> <br> <input
 							type="submit" value="Submit">
 					</form>
-
+					<!-- Form -->
 
 				</div>
 			</div>

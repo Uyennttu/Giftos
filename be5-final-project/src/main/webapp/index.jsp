@@ -83,7 +83,7 @@
 							<c:if test="${empty sessionScope.user}">
 
 								<a href="login.jsp"> <i class="fa fa-user"
-									aria-hidden="true"></i> <span>Login</span> <a href="#"> <span>Register</span>
+									aria-hidden="true"></i> <span>Login</span> <a href="register.jsp"> <span>Register</span>
 							</c:if>
 							<c:if test="${not empty sessionScope.user}">
 

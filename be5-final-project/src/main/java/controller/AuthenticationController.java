@@ -21,6 +21,8 @@ import entity.User;
 public class AuthenticationController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	UserDAO userDAO = new UserDAO();
+
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -36,26 +38,27 @@ public class AuthenticationController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			String username = request.getParameter("username");
-			String password = request.getParameter("password");
-			UserDAO userDAO = new UserDAO();
-			User user = userDAO.getUserByNameAndPassword(username, password);
 
 			String action = request.getParameter("action");
-			if (action == null) {
-				action = "LOG_IN";
-			}
-			switch (action) {
-			case "LOG_IN": {
-				Login(request, response, user);
-				break;
-			}
+			if (action != null) {
 
-			case "LOG_OUT": {
-				Logout(request, response);
-				break;
-			}
-			default:
+				switch (action) {
+				case "LOG_IN": {
+					login(request, response);
+					break;
+				}
+
+				case "LOG_OUT": {
+					logout(request, response);
+					break;
+				}
+
+				case "REGISTER": {
+					register(request, response);
+					break;
+				}
+
+				}
 			}
 
 		} catch (
@@ -66,10 +69,30 @@ public class AuthenticationController extends HttpServlet {
 
 	}
 
-	private void Login(HttpServletRequest request, HttpServletResponse response, User user)
-			throws ServletException, IOException {
+	private void register(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, SQLException, ServletException {
+		String email = request.getParameter("email");
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+
+		User user = userDAO.registerNewAccount(email, username, password);
 		if (user == null) {
-			request.setAttribute("errorMessage", "Incorrect username or password. Please try again");
+			request.setAttribute("errorMessage", "Email or username already exists.");
+			RequestDispatcher rd = request.getRequestDispatcher("register.jsp");
+			rd.forward(request, response);
+		} else {
+			response.sendRedirect("login.jsp");
+		}
+	}
+
+	private void login(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, SQLException {
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+
+		User user = userDAO.getUserByNameAndPassword(username, password);
+		if (user == null) {
+			request.setAttribute("errorMessage", "Incorrect username or password. Please try again.");
 			RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
 			rd.forward(request, response);
 		} else {
@@ -79,7 +102,7 @@ public class AuthenticationController extends HttpServlet {
 		}
 	}
 
-	private void Logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
 		session.invalidate();
 		response.sendRedirect("Home");
