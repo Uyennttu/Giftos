@@ -81,17 +81,18 @@
 						<!-- login -->
 						<div class="user_option">
 							<c:if test="${empty sessionScope.user}">
-
 								<a href="login.jsp"> <i class="fa fa-user"
-									aria-hidden="true"></i> <span>Login</span> <a href="register.jsp"> <span>Register</span>
+									aria-hidden="true"></i> <span>Login</span></a>
+								<a href="register.jsp"> <i class="fa fa-registered"
+									aria-hidden="true"></i> <span>Register</span></a>
 							</c:if>
 							<c:if test="${not empty sessionScope.user}">
 
-								<a href="#"> <i class="fa fa-user" aria-hidden="true"></i> <span>${user.username}</span>
-
-									<a href="Authentication?action=LOG_OUT"> <span>Logout</span>
+								<a href="#"> <i class="fa fa-user" aria-hidden="true"></i> <span>${sessionScope.user.username}</span>
+								</a>
+								<a href="Authentication?action=LOGOUT"> <span>Logout</span></a>
 							</c:if>
-							</a>
+
 							<!-- end login -->
 							<a href=""> <i class="fa fa-shopping-bag" aria-hidden="true"></i>
 							</a>

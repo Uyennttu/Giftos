@@ -43,18 +43,13 @@ public class AuthenticationController extends HttpServlet {
 			if (action != null) {
 
 				switch (action) {
-				case "LOG_IN": {
-					login(request, response);
+				case "LOGIN": {
+					doLogin(request, response);
 					break;
 				}
 
-				case "LOG_OUT": {
-					logout(request, response);
-					break;
-				}
-
-				case "REGISTER": {
-					register(request, response);
+				case "LOGOUT": {
+					doLogout(request, response);
 					break;
 				}
 
@@ -69,23 +64,7 @@ public class AuthenticationController extends HttpServlet {
 
 	}
 
-	private void register(HttpServletRequest request, HttpServletResponse response)
-			throws IOException, SQLException, ServletException {
-		String email = request.getParameter("email");
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
-
-		User user = userDAO.registerNewAccount(email, username, password);
-		if (user == null) {
-			request.setAttribute("errorMessage", "Email or username already exists.");
-			RequestDispatcher rd = request.getRequestDispatcher("register.jsp");
-			rd.forward(request, response);
-		} else {
-			response.sendRedirect("login.jsp");
-		}
-	}
-
-	private void login(HttpServletRequest request, HttpServletResponse response)
+	private void doLogin(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
@@ -102,9 +81,9 @@ public class AuthenticationController extends HttpServlet {
 		}
 	}
 
-	private void logout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	private void doLogout(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		HttpSession session = request.getSession();
-		session.invalidate();
+		session.removeAttribute("user");
 		response.sendRedirect("Home");
 	}
 

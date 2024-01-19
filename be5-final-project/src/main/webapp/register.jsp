@@ -31,6 +31,7 @@
 <link href="css/style.css" rel="stylesheet" />
 <!-- responsive style -->
 <link href="css/responsive.css" rel="stylesheet" />
+
 </head>
 
 <body>
@@ -50,29 +51,61 @@
 	<div class="container">
 		<div class="heading_container heading_center">
 			<h3>Create a new account</h3>
-			<c:if test="${not empty errorMessage}">
-				<p style="color: red;">${errorMessage}</p>
-			</c:if>
-		</div>
+
+		
 		<br>
 	</div>
 	<div class="container container-bg">
-		<div class="heading_container heading_center">
-			<div class="row">
-				<div class="col-md-5 col-lg-2 px-0">
+		
+				<div class="col-md-6 col-lg-5 px-4">
+				<c:if test="${not empty errorMessage}">
+				<p style="color: red;">${errorMessage}</p>
+			</c:if>
 
 					<!-- Form -->
-					<form action="Authentication">
-					<input type="text" name="action" hidden value="REGISTER">
-						<label for="email">Email:</label><br> <input type="text"
-							id="email" name="email" placeholder="Enter your email"><br>
-						<br> <label for="uname">Username:</label><br> <input
-							type="text" id="uname" name="username"
-							placeholder="Enter your username"><br>
-						<br> <label for="pwd">Password:</label><br> <input
-							type="text" id="pwd" name="password"
-							placeholder="Enter your password"><br> <br> <input
-							type="submit" value="Submit">
+					<form action="Register" method="post">
+						<label for="email">Email:</label><br> 
+						<input type="text" id="email" name="email" placeholder="Enter your email"><br><br>
+						
+						<label for="username">Username:</label><br> 
+						<input type="text" id="uname" name="username" placeholder="Enter your username"><br><br> 
+						
+						<label for="password">Password:</label><br> 
+						<input type="text" id="pwd" name="password" placeholder="Enter your password"><br><br>
+						
+						<label for="firstname">Firstname:</label><br> 
+						<input type="text" id="fname" name="firstname" placeholder="Enter your firstname"><br><br> 
+						
+						<label for="lastname">Lastname:</label><br> 
+						<input type="text" id="lname" name="lastname" placeholder="Enter your lastname"><br><br>
+						
+						<label for="gender">Gender:</label> 
+						<select name="gender" id="gender">
+							<option value="male">Male</option>
+							<option value="female">Female</option>
+							<option value="others">Others</option>
+						</select> <br><br> 
+						
+						<label for="interest">Interest?</label><br> 
+						<input type="checkbox" id="luxury" name="interest" value="luxury">
+						<label for="luxury">Luxury Brand</label><br>
+						
+						<input type="checkbox" id="medium" name="interest" value="medium">
+						<label for="medium">Medium Brand</label><br>
+						
+						<input type="checkbox" id="budget" name="interest" value="budget">
+						<label for="budget">Budget</label><br>
+						
+						<input type="checkbox" id="local" name="interest" value="local">
+						<label for="local">Local</label><br>
+						
+						<input type="checkbox" id="national" name="interest" value="national">
+						<label for="national">National</label><br>
+						
+						<input type="checkbox" id="international" name="interest" value="international">
+						<label for="international">International</label><br><br>
+
+						<input type="submit" value="Register">
 					</form>
 					<!-- Form -->
 

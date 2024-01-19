@@ -64,7 +64,7 @@
 
 
 					<form action="Authentication">
-					<input type="text" name="action" hidden value="LOG_IN">
+					<input type="text" name="action" hidden value="LOGIN">
 						<label for="uname">Username:</label><br> <input type="text"
 							id="uname" name="username" placeholder="Enter your username"><br>
 						<br> <label for="pwd">Password:</label><br> <input

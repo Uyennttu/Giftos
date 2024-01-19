@@ -5,12 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import entity.User;
 import sql.connection.DBConnection;
 
@@ -31,17 +25,24 @@ public class UserDAO {
 
 	}
 
-	public User registerNewAccount(String email, String username, String password) throws SQLException {
+	public User registerNewAccount(String email, String username, String password, String firstname, String lastname, String gender, String[] interests) throws SQLException {
 		Connection connection = DBConnection.makeConnection();
 		if (checkExistedEmailAndUsername(email, username)) {
 			return null;
 		} else {
-			String sqlQuery = "INSERT INTO user (email, username, password) VALUES (?,?,?)";
+			String sqlQuery = "INSERT INTO user (email, username, password, firstname, lastname, gender, interest) VALUES (?,?,?,?,?,?,?)";
 			PreparedStatement preStmt = connection.prepareStatement(sqlQuery);
 
 			preStmt.setString(1, email);
 			preStmt.setString(2, username);
 			preStmt.setString(3, password);
+			preStmt.setString(4, firstname);
+			preStmt.setString(5, lastname);
+			preStmt.setString(6, gender);
+			
+			String interestsString = String.join(",", interests);
+			preStmt.setString(7, interestsString);
+			
 
 			preStmt.executeUpdate();
 			return new User();
