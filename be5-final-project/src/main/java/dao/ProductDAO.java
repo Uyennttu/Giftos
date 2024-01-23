@@ -36,11 +36,11 @@ public class ProductDAO {
 
 	}
 
-	public static Product getProductById(int productId) throws SQLException {
+	public static Product getProductById(String productId) throws SQLException {
 		Connection connection = DBConnection.makeConnection();
 		String sqlQuery = "SELECT * FROM product WHERE id = ?";
 		PreparedStatement preStmt = connection.prepareStatement(sqlQuery);
-		preStmt.setInt(1, productId);
+		preStmt.setInt(1, Integer.parseInt(productId));
 		ResultSet resultSet = preStmt.executeQuery();
 
 		if (resultSet.next()) {

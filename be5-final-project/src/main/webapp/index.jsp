@@ -35,76 +35,7 @@
 
 <body>
 	<div class="hero_area">
-		<!-- header section starts -->
-		<header class="header_section">
-			<nav class="navbar navbar-expand-lg custom_nav-container ">
-				<a class="navbar-brand" href="index.html"> <span> Giftos
-				</span>
-				</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target="#navbarSupportedContent"
-					aria-controls="navbarSupportedContent" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class=""></span>
-				</button>
-
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<ul class="navbar-nav  ">
-						<li class="nav-item active"><a class="nav-link" href="Home">Home
-								<span class="sr-only">(current)</span>
-						</a></li>
-						<c:forEach items="${categories}" var="category">
-							<li class="nav-item"><a class="nav-link"
-								href="Home?action=SHOW_PRODUCTS_BY_CATEGORY&categoryId=${category.id}">
-									${category.name} </a></li>
-						</c:forEach>
-
-
-
-						<!-- search bar -->
-						<form action="Home">
-							<div class="col-md-6 col-lg-11 px-0 d-flex align-items-center">
-								<input type="text" name="action" hidden value="SEARCH">
-								<input type="text" name="searchValue" class="form-control mr-2"
-									placeholder="Search">
-								<!-- <button class="btn nav_search-btn" type="submit">
-										<i class="fa fa-search" aria-hidden="true"></i>
-									</button> -->
-
-
-								<div class="d-flex">
-									<input type="submit" value="SEARCH">
-								</div>
-							</div>
-						</form>
-						<!-- end search bar -->
-						<!-- login -->
-						<div class="user_option">
-							<c:if test="${empty sessionScope.user}">
-								<a href="login.jsp"> <i class="fa fa-user"
-									aria-hidden="true"></i> <span>Login</span></a>
-								<a href="register.jsp"> <i class="fa fa-registered"
-									aria-hidden="true"></i> <span>Register</span></a>
-							</c:if>
-							<c:if test="${not empty sessionScope.user}">
-
-								<a href="#"> <i class="fa fa-user" aria-hidden="true"></i> <span>${sessionScope.user.username}</span>
-								</a>
-								<a href="Authentication?action=LOGOUT"> <span>Logout</span></a>
-							</c:if>
-
-							<!-- end login -->
-							<a href=""> <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-							</a>
-						</div>
-
-					</ul>
-				</div>
-			</nav>
-		</header>
-
-
-		<!-- end header section -->
+<jsp:include page="/header-section.jsp"/>
 
 
 		<!-- shop section -->
@@ -118,7 +49,7 @@
 					<c:forEach items="${products}" var="product">
 						<div class="col-sm-6 col-md-4 col-lg-3">
 							<div class="box">
-								<a href="Home?productId=${product.id}">
+								<a href="Product?productId=${product.id}">
 									<div class="img-box">
 										<img src="images/${product.imgName}" alt="">
 									</div>
@@ -623,80 +554,7 @@
 	</section>
 	<!-- end client section -->
 
-	<!-- info section -->
-
-	<section class="info_section  layout_padding2-top">
-		<div class="social_container">
-			<div class="social_box">
-				<a href=""> <i class="fa fa-facebook" aria-hidden="true"></i>
-				</a> <a href=""> <i class="fa fa-twitter" aria-hidden="true"></i>
-				</a> <a href=""> <i class="fa fa-instagram" aria-hidden="true"></i>
-				</a> <a href=""> <i class="fa fa-youtube" aria-hidden="true"></i>
-				</a>
-			</div>
-		</div>
-		<div class="info_container ">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-6 col-lg-3">
-						<h6>ABOUT US</h6>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-							sed doLorem ipsum dolor sit amet, consectetur adipiscing elit,
-							sed doLorem ipsum dolor sit amet,</p>
-					</div>
-					<div class="col-md-6 col-lg-3">
-						<div class="info_form ">
-							<h5>Newsletter</h5>
-							<form action="#">
-								<input type="email" placeholder="Enter your email">
-								<button>Subscribe</button>
-							</form>
-						</div>
-					</div>
-					<div class="col-md-6 col-lg-3">
-						<h6>NEED HELP</h6>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-							sed doLorem ipsum dolor sit amet, consectetur adipiscing elit,
-							sed doLorem ipsum dolor sit amet,</p>
-					</div>
-					<div class="col-md-6 col-lg-3">
-						<h6>CONTACT US</h6>
-						<div class="info_link-box">
-							<a href=""> <i class="fa fa-map-marker" aria-hidden="true"></i>
-								<span> Gb road 123 london Uk </span>
-							</a> <a href=""> <i class="fa fa-phone" aria-hidden="true"></i> <span>+01
-									12345678901</span>
-							</a> <a href=""> <i class="fa fa-envelope" aria-hidden="true"></i>
-								<span> demo@gmail.com</span>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- footer section -->
-		<footer class=" footer_section">
-			<div class="container">
-				<p>
-					&copy; <span id="displayYear"></span> All Rights Reserved By <a
-						href="https://html.design/">Free Html Templates</a>
-				</p>
-			</div>
-		</footer>
-		<!-- footer section -->
-
-	</section>
-
-	<!-- end info section -->
-
-
-	<script src="js/jquery-3.4.1.min.js"></script>
-	<script src="js/bootstrap.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
-		
-	</script>
-	<script src="js/custom.js"></script>
+<jsp:include page="footer-section.jsp"/>
 </body>
 
 </html>
