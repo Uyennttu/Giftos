@@ -60,7 +60,7 @@
 					</c:if>
 
 					<!-- end login -->
-					<a href=""> <i class="fa fa-shopping-bag" aria-hidden="true"></i> (${sessionScope.cart.size()})
+					<a href="Cart?action=VIEW_CART"> <i class="fa fa-shopping-bag" aria-hidden="true"></i> (${sessionScope.cart.getItems().size()})
 					</a>
 				</div>
 

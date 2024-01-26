@@ -1,5 +1,4 @@
 package entity;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class Product {
 	private int id;
 	private String name;
@@ -28,5 +28,18 @@ public class Product {
 	public boolean getIsNew() {
 		return isNew;
 	}
-
+	
+	@Override
+	public int hashCode() {
+		int hashCode = 1;
+		hashCode = 31*hashCode+id;
+		return hashCode;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		Product product = (Product) obj;
+		return this.id == product.getId();
+		
+	}
 }

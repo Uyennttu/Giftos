@@ -5,15 +5,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import dao.CategoryDAO;
+import dao.ProductDAO;
+import entity.Cart;
+import entity.Category;
+import entity.Product;
 
 /**
  * Servlet implementation class CartController
@@ -44,6 +52,11 @@ public class CartController extends HttpServlet {
 				addToCart(request, response);
 				break;
 			}
+			case "VIEW_CART": {
+				viewCart(request, response);
+				
+				break;
+			}
 			default:
 				break;
 			}
@@ -60,53 +73,45 @@ public class CartController extends HttpServlet {
 		}
 	}
 
+	
 	private void addToCart(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException {
 		String productId = request.getParameter("productId");
-		Set<Integer> uniqueProductIds;
-		Map<Integer, Integer> quantityEachProduct;
+		Cart cart;
 
 		HttpSession session = request.getSession();
 
-		// Unique Product
 		if (session.getAttribute("cart") == null) {
-			uniqueProductIds = new HashSet<Integer>();
+			cart = new Cart();
+			cart.setItems(new HashMap<Product, Integer>());
 		} else {
-			uniqueProductIds = (Set<Integer>) session.getAttribute("cart");
-
+			cart = (Cart) session.getAttribute("cart");
 		}
-		uniqueProductIds.add(Integer.parseInt(productId));
-		session.setAttribute("cart", uniqueProductIds);
+		Product product = ProductDAO.getProductById(productId);
 
-		// Quantity of each Product
-		if (session.getAttribute("quantityEachProduct") == null) {
-			quantityEachProduct = new HashMap<Integer, Integer>();
+		if (cart.getItems().containsKey(product)) {
+			int newQuantity = cart.getItems().get(product) + 1;
+			cart.getItems().put(product, newQuantity);
 		} else {
-			quantityEachProduct = (Map<Integer, Integer>) session.getAttribute("quantityEachProduct");
+			cart.getItems().put(product, 1);
 		}
-
-		int currentQuantity = quantityEachProduct.getOrDefault(Integer.parseInt(productId), 0);
-		quantityEachProduct.put(Integer.parseInt(productId), currentQuantity + 1);
-		session.setAttribute("quantityEachProduct", quantityEachProduct);
+		session.setAttribute("cart", cart);
+		
+	
 
 		response.sendRedirect("Product?productId=" + productId);
 
-		// Print the quantity of each unique product
-	    System.out.println("Quantity of each product:");
-	    for (Integer uniqueProductId : uniqueProductIds) {
-	        int quantity = quantityEachProduct.getOrDefault(uniqueProductId, 0);
-	        System.out.println("Product id: " + uniqueProductId + ", Quantity: " + quantity);
-	    }
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+	public void viewCart(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, SQLException {
+		CategoryDAO categoryDAO = new CategoryDAO();
+		List<Category> categories = categoryDAO.getAllCategories();
+				
+		RequestDispatcher rd = request.getRequestDispatcher("/view-cart.jsp");
+		request.setAttribute("categories", categories);
+		rd.forward(request, response);
+		
+		
 	}
-
 }
