@@ -47,21 +47,37 @@
 				<!-- login -->
 				<div class="user_option">
 					<c:if test="${empty sessionScope.user}">
-						<a href="login.jsp"> <i class="fa fa-user" aria-hidden="true"></i>
-							<span>Login</span></a>
+					<a href="Order?action=VIEW_ORDER">
+						<i class="fa fa-user" aria-hidden="true"></i></a>
+						<a href="login.jsp"> Login</a>
+						
+							
 						<a href="register.jsp"> <i class="fa fa-registered"
 							aria-hidden="true"></i> <span>Register</span></a>
 					</c:if>
 					<c:if test="${not empty sessionScope.user}">
 
-						<a href="#"> <i class="fa fa-user" aria-hidden="true"></i> <span>${sessionScope.user.username}</span>
+						<a href="Order?action=VIEW_ORDER"> <i class="fa fa-user" aria-hidden="true"></i> <span>${sessionScope.user.username}</span>
 						</a>
 						<a href="Authentication?action=LOGOUT"> <span>Logout</span></a>
 					</c:if>
 
 					<!-- end login -->
-					<a href="Cart?action=VIEW_CART"> <i class="fa fa-shopping-bag" aria-hidden="true"></i> (${sessionScope.cart.getItems().size()})
-					</a>
+					
+						<c:if test="${empty sessionScope.cart.getItems()}">
+							<a href="Cart?action=VIEW_CART"> <i
+								class="fa fa-shopping-bag" aria-hidden="true"></i> (0)
+							</a>
+						</c:if>
+						<c:if test="${not empty sessionScope.cart.getItems()}">
+							<a href="Cart?action=VIEW_CART"> <i
+								class="fa fa-shopping-bag" aria-hidden="true"></i>
+								(${sessionScope.cart.getItems().size()})
+							</a>
+						</c:if>
+
+
+					
 				</div>
 
 			</ul>

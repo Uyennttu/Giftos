@@ -22,6 +22,7 @@ import dao.ProductDAO;
 import entity.Cart;
 import entity.Category;
 import entity.Product;
+import model.ProductInCart;
 
 /**
  * Servlet implementation class CartController
@@ -45,6 +46,7 @@ public class CartController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String action = request.getParameter("action");
+
 		try {
 
 			switch (action) {
@@ -54,9 +56,17 @@ public class CartController extends HttpServlet {
 			}
 			case "VIEW_CART": {
 				viewCart(request, response);
-				
 				break;
 			}
+			case "REMOVE_ITEM": {
+				viewCart(request, response);
+				break;
+			}
+			case "ADD_ITEM": {
+				viewCart(request, response);
+				break;
+			}
+			
 			default:
 				break;
 			}
@@ -73,31 +83,32 @@ public class CartController extends HttpServlet {
 		}
 	}
 
-	
 	private void addToCart(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, SQLException {
 		String productId = request.getParameter("productId");
 		Cart cart;
-
 		HttpSession session = request.getSession();
 
 		if (session.getAttribute("cart") == null) {
 			cart = new Cart();
-			cart.setItems(new HashMap<Product, Integer>());
+			cart.setItems(new HashMap<ProductInCart, Integer>());
 		} else {
 			cart = (Cart) session.getAttribute("cart");
 		}
 		Product product = ProductDAO.getProductById(productId);
+		ProductInCart productInCart = new ProductInCart(product.getId(), product.getName(), product.getPrice(), 0);
 
-		if (cart.getItems().containsKey(product)) {
-			int newQuantity = cart.getItems().get(product) + 1;
-			cart.getItems().put(product, newQuantity);
+		if (cart.getItems().containsKey(productInCart)) {
+			int newQuantity = cart.getItems().get(productInCart) + 1;
+			productInCart.setSubTotal(newQuantity * productInCart.getPrice());
+			cart.getItems().remove(productInCart);
+			cart.getItems().put(productInCart, newQuantity);
 		} else {
-			cart.getItems().put(product, 1);
+			productInCart.setSubTotal(productInCart.getPrice());
+			cart.getItems().put(productInCart, 1);
 		}
+		cart.setTotal(cart.getTotal() + productInCart.getPrice());
 		session.setAttribute("cart", cart);
-		
-	
 
 		response.sendRedirect("Product?productId=" + productId);
 
@@ -107,11 +118,27 @@ public class CartController extends HttpServlet {
 			throws ServletException, IOException, SQLException {
 		CategoryDAO categoryDAO = new CategoryDAO();
 		List<Category> categories = categoryDAO.getAllCategories();
-				
-		RequestDispatcher rd = request.getRequestDispatcher("/view-cart.jsp");
+
+		RequestDispatcher rd = request.getRequestDispatcher("/cart.jsp");
 		request.setAttribute("categories", categories);
 		rd.forward(request, response);
-		
-		
+
 	}
+
+	public void removeItem(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
+	    String productId = request.getParameter("productId");
+	    HttpSession session = request.getSession();
+	   
+	    response.sendRedirect("/cart.jsp");
+	}
+	
+	public void addItem(HttpServletRequest request, HttpServletResponse response) throws IOException, SQLException {
+	    String productId = request.getParameter("productId");
+	    HttpSession session = request.getSession();
+	   
+	    response.sendRedirect("/cart.jsp");
+	}
+	
+	
+
 }

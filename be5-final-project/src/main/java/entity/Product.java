@@ -29,17 +29,5 @@ public class Product {
 		return isNew;
 	}
 	
-	@Override
-	public int hashCode() {
-		int hashCode = 1;
-		hashCode = 31*hashCode+id;
-		return hashCode;
-	}
 	
-	@Override
-	public boolean equals(Object obj) {
-		Product product = (Product) obj;
-		return this.id == product.getId();
-		
-	}
 }

@@ -42,37 +42,20 @@
 		<section class="shop_section layout_padding">
 			<div class="container">
 				<div class="heading_container heading_center">
-					<h2>Cart Details</h2>
+					<h2>Order Details</h2>
 				</div>
 				<div class="row">
-					<div class="col-sm-6 col-lg-12">
-						<c:if test="${empty sessionScope.cart}">
-							 <p style="color: red; text-align: center;">Your cart is empty.</p>
-						</c:if>
-
-						<div class="col-sm-6 col-lg-12">
-
-							<c:if
-								test="${not empty sessionScope.cart and not empty sessionScope.cart.items}">
-								 <c:set var="totalPrice" value="0" />
-									<c:forEach var="entry" items="${sessionScope.cart.items}">
-										<strong>${entry.key.name}</strong> - Quantity:
-											${entry.value} - Price: $${entry.key.price} - Total:
-											$${entry.key.price * entry.value}
-											<br>
-											<c:set var="totalPrice" value="${totalPrice + (entry.key.price * entry.value)}" />
-									</c:forEach>
-									<br>
-									
-									<p><strong>Total Price : </strong> $${totalPrice}</p>
-								
-							</c:if>
-							<br>
-							<div></div>
-						</div>
-
-					</div>
+					<div class="col-sm-6 col-lg-12"></div>
+					  <c:if test="${empty orders}">
+                <p>No orders available</p>
+            </c:if>
+            <c:forEach var="order" items="${orders}">
+                <p>Order ID: ${order.orderId}</p>
+                <p>User ID : ${order.userId}</p>
+               
+            </c:forEach>
 				</div>
+
 				<c:if test="${not empty searchResultMessage}">
 					<div class="heading_container heading_center">
 						<p style="color: red;">${searchResultMessage}</p>
@@ -81,9 +64,8 @@
 
 
 				<div class="btn-box">
-					<a href="Home"> Back To Menu </a>
+					<a href=""> Paging </a>
 				</div>
-
 			</div>
 
 		</section>
